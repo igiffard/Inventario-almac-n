@@ -1,0 +1,6 @@
+{
+  "name": "UniLab Inventory & Asset Manager",
+  "description": "University laboratory inventory management system tracking item locations, custodians, equipment condition, and automated restock intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
