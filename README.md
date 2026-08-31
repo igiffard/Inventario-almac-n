@@ -1,86 +1,84 @@
 # UniLab Inventory & Asset Manager 🔬📊
+### Sistema de Control de Almacén e Inventario — FCM UABC
 
-A modern, full-featured laboratory and university inventory management system built with **React 19**, **TypeScript**, **Tailwind CSS**, and **Vite**.
-
-Designed specifically for academic faculties, research laboratories, and institutional asset tracking (e.g., UABC - Facultad de Ciencias Marinas).
-
----
-
-## ✨ Features
-
-- 📦 **Master Inventory Hub**: High-performance searchable and filterable database supporting thousands of catalog items, with categorization, location hierarchy, status filters, and instant sorting.
-- 🔄 **Live Google Sheets Synchronization**: Seamless two-way import and live sync from published Google Sheets (CSV/HTML) with automatic column mapping and diff analysis.
-- 👤 **Custody & Responsibility Tracking**: Track which professor, technician, or student has custody of specific equipment, historical checkout logs, transfer workflows, and overdue alerts.
-- 🛠️ **Condition & Metrology Log**: Inspect equipment physical/operational conditions (`Brand New`, `Good`, `Fair`, `Damaged / Repair Needed`, `Decommissioned`), schedule maintenance, and log calibration history.
-- 📈 **Automated Restock & Budget Intelligence**: Real-time restock triggers when inventory dips below minimum safety thresholds, with automated purchase orders and unit cost estimations.
-- 🏷️ **Asset Tag & QR / Barcode Generator**: Print-ready thermal and sticker asset tags with formatted barcodes, serial numbers, and scan links.
-- 💾 **Multi-Format Export**: One-click export to Excel (`.xlsx`), CSV (`.csv`), or structured JSON for administrative audits and university reporting.
-- 🌓 **Offline-First & Local Storage Persistence**: Works completely in-browser with reactive caching and zero external database dependencies needed for standalone deployments.
+Sistema web de gestión de inventarios, equipos de laboratorio, vidriería, custodias docentes/estudiantiles, estados físicos/calibración y compras inteligentes. Diseñado para laboratorios universitarios y centros de investigación.
 
 ---
 
-## 🚀 Quick Start
+## 🌐 1. Publicación en GitHub Pages (con o sin Dominio Personalizado)
 
-### Prerequisites
-- Node.js 18.0.0 or higher
-- npm 9.0.0 or higher
+El proyecto incluye un flujo de trabajo automatizado con **GitHub Actions** en `.github/workflows/static.yml`.
 
-### Installation
+### Pasos para activar en GitHub:
+1. Sube tu código al repositorio en GitHub (`main`).
+2. En GitHub, entra a **Settings** > **Pages** (menú izquierdo).
+3. En **Build and deployment**:
+   - **Source**: Selecciona **GitHub Actions**.
+4. ¡Listo! Cada vez que hagas un push a `main`, GitHub compilará el proyecto automáticamente y lo publicará en tu enlace (ej: `https://tu-usuario.github.io/tu-repositorio/`).
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
-   cd YOUR_REPOSITORY_NAME
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start the local development server:**
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-4. **Build for production:**
-   ```bash
-   npm run build
-   ```
-   The compiled static files will be placed in the `dist/` directory.
+### Configurar un Dominio Personalizado (ej. `inventario.uabc.edu.mx`):
+1. En GitHub > **Settings** > **Pages** > **Custom domain**.
+2. Escribe tu dominio (ej. `inventario.uabc.edu.mx`) y haz clic en **Save**.
+3. En tu proveedor de DNS institucional, agrega un registro **CNAME** apuntando a `tu-usuario.github.io`.
+4. Marca la casilla **Enforce HTTPS**.
 
 ---
 
-## 🌐 Deployment Options
+## 📌 2. Publicación e Integración en Google Sites
 
-### 1. Vercel / Netlify (Recommended for Quick Sharing)
-- Push this repo to GitHub.
-- Import the repo into [Vercel](https://vercel.com) or [Netlify](https://netlify.com).
-- Build command: `npm run build`
-- Output directory: `dist`
+Puedes embeber el sistema de inventario directamente dentro de cualquier página o portal de **Google Sites**:
 
-### 2. GitHub Pages
-1. Install `gh-pages` if desired:
-   ```bash
-   npm install -D gh-pages
+### Opción A: Por URL (Recomendada)
+1. Abre tu sitio en [Google Sites](https://sites.google.com).
+2. En el panel derecho, haz clic en **Insertar** (Insert) > **Embeber / Incorporar** (Embed `< >`).
+3. Selecciona la pestaña **Por URL** (By URL).
+4. Pega la URL pública de tu GitHub Pages (ej. `https://tu-usuario.github.io/tu-repositorio/` o tu dominio personalizado).
+5. Selecciona **Página completa** o **Ventana interactiva** y pulsa **Insertar**.
+6. Ajusta el ancho y alto del contenedor en el editor de Google Sites para que ocupe todo el espacio deseado.
+
+### Opción B: Mediante Código de Inserción (HTML iframe)
+Si prefieres definir dimensiones exactas:
+1. En Google Sites > **Insertar** > **Incorporar** > pestaña **Código**.
+2. Pega el siguiente código HTML:
+   ```html
+   <iframe 
+     src="https://tu-usuario.github.io/tu-repositorio/" 
+     style="width:100%; height:850px; border:none; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);" 
+     allow="clipboard-write"
+     title="Inventario FCM UABC">
+   </iframe>
    ```
-2. Add `"deploy": "vite build && gh-pages -d dist"` to `package.json` scripts.
-3. Configure `base: '/<REPO_NAME>/'` in `vite.config.ts`.
-4. Run `npm run deploy`.
+3. Haz clic en **Siguiente** y luego en **Insertar**.
 
 ---
 
-## 📋 Technology Stack
+## ✨ Características Principales
 
-- **Framework**: React 19 + TypeScript
-- **Bundler**: Vite 6
-- **Styling**: Tailwind CSS v4
-- **Icons**: Lucide React
-- **Animations**: Motion
-- **Data Parsing & Export**: PapaParse, XLSX, Canvas Confetti
+- 📦 **Catálogo de 1,043 Artículos**: Clasificación por vidriería (buretas, matraces, probetas, pipetas, vasos), materiales de uso específico, reactivos y equipos de precisión.
+- 🔄 **Sincronización con Google Sheets**: Conexión al libro de cálculo oficial de la universidad con actualización y restablecimiento inmediato.
+- 👤 **Módulo "¿Quién lo Tiene?" (Custodias)**: Registro de transferencias entre profesores, técnicos y alumnos, motivos de préstamo y fechas de devolución.
+- 🛠️ **Estado Físico y Calibración**: Detección de material con fisuras/roturas, y control de balanzas analíticas y equipos que requieren calibración metrológica.
+- 📈 **Módulo "¿Reabastecer o Todo OK?"**: Cálculo automático de compras sugeridas y presupuestos cuando las existencias caen por debajo del umbral mínimo de seguridad.
+- 🏷️ **Generador de Etiquetas de Activo**: Impresión de marbetes con código de barras y formato institucional listos para etiquetado físico.
+- 💾 **Exportación Multiformato**: Descarga instantánea en Excel (`.xlsx`) de toda la base de datos o filtros activos.
+- 📱 **100% Responsivo e Integrable**: Funciona en computadoras, tabletas, celulares y dentro de iframes en Google Sites.
 
 ---
 
-## 📄 License
-This project is open-source and available under the [MIT License](LICENSE).
+## 🚀 Ejecución Local
+
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Iniciar servidor de desarrollo
+npm run dev
+
+# 3. Compilar para producción
+npm run build
+```
+
+---
+
+## 📄 Licencia
+Distribuido bajo licencia MIT. Desarrollado para la Facultad de Ciencias Marinas - Universidad Autónoma de Baja California (UABC).

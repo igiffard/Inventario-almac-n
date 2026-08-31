@@ -16,6 +16,7 @@ import confetti from 'canvas-confetti';
 
 interface InventoryContextType {
   items: InventoryItem[];
+  setItems: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
   filteredItems: InventoryItem[];
   activeTab: ActiveTab;
   setActiveTab: (tab: ActiveTab) => void;
@@ -575,6 +576,7 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   return (
     <InventoryContext.Provider value={{
       items,
+      setItems,
       filteredItems,
       activeTab,
       setActiveTab,

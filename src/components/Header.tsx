@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building2, 
   RefreshCw, 
@@ -8,7 +8,8 @@ import {
   PackageCheck,
   AlertTriangle,
   RotateCcw,
-  Sparkles
+  Sparkles,
+  Maximize2
 } from 'lucide-react';
 import { useInventory } from '../context/InventoryContext';
 import { exportInventoryToExcel } from '../utils/inventoryUtils';
@@ -24,8 +25,24 @@ export const Header: React.FC = () => {
     applyPreset 
   } = useInventory();
 
+  const [isIframe, setIsIframe] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (window.self !== window.top) {
+        setIsIframe(true);
+      }
+    } catch (e) {
+      setIsIframe(true);
+    }
+  }, []);
+
   const handleExport = () => {
     exportInventoryToExcel(items, `Inventario_FCM_UABC_${new Date().toISOString().split('T')[0]}.xlsx`);
+  };
+
+  const handleOpenInNewTab = () => {
+    window.open(window.location.href, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -34,7 +51,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo & University Context */}
           <div className="flex items-center space-x-3 sm:space-x-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-teal-700 via-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-sm ring-1 ring-black/5">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-teal-700 via-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-sm ring-1 ring-black/5 shrink-0">
               <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
@@ -46,8 +63,13 @@ export const Header: React.FC = () => {
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                   Inventario en Línea 2026
                 </span>
+                {isIframe && (
+                  <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 hidden sm:inline-block">
+                    Modo Integrado Google Sites
+                  </span>
+                )}
               </div>
-              <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h1 className="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Sistema de Control de Almacén e Inventario
               </h1>
               <p className="text-xs text-slate-500 hidden sm:block">
@@ -57,7 +79,19 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Quick Metrics & Actions */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
+          <div className="flex items-center space-x-1.5 sm:space-x-3">
+            {/* Pop-out button if in iframe or mobile */}
+            {isIframe && (
+              <button
+                onClick={handleOpenInNewTab}
+                className="inline-flex items-center gap-1 p-2 sm:px-2.5 sm:py-1.5 text-xs font-medium rounded-lg text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 transition-colors"
+                title="Abrir en pantalla completa / nueva pestaña"
+              >
+                <Maximize2 className="w-3.5 h-3.5" />
+                <span className="hidden lg:inline">Pantalla Completa</span>
+              </button>
+            )}
+
             {/* Quick Status Chips */}
             <button
               onClick={() => applyPreset('restock')}
@@ -84,7 +118,7 @@ export const Header: React.FC = () => {
             {/* Sync with Google Sheet */}
             <button
               onClick={() => setIsSyncModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors"
               title="Sincronizar o importar datos de Google Sheets"
             >
               <RefreshCw className="w-4 h-4 text-slate-600" />
@@ -94,7 +128,7 @@ export const Header: React.FC = () => {
             {/* Export Excel */}
             <button
               onClick={handleExport}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium rounded-lg text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-lg text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors"
               title="Descargar Excel completo con códigos y custodios"
             >
               <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
