@@ -52,6 +52,18 @@ Si prefieres definir dimensiones exactas:
 
 ---
 
+## 🔒 3. Código de Acceso Universal (Protección del Sistema)
+
+Para proteger la consulta e interacción del inventario y evitar accesos no autorizados:
+- **Código Universal Predeterminado**: `FCM2026`
+- **Cambio de Código**: Puedes cambiar el código en cualquier momento haciendo clic en el botón **"Clave de Acceso"** en la barra superior del sistema.
+- **Acceso Directo sin Escribir Clave (para Google Sites)**: Si deseas que los usuarios de tu Google Sites institucional no tengan que escribir la clave manualmente, añade `?code=FCM2026` a la URL:
+  ```
+  https://tu-usuario.github.io/tu-repositorio/?code=FCM2026
+  ```
+
+---
+
 ## ✨ Características Principales
 
 - 📦 **Catálogo de 1,043 Artículos**: Clasificación por vidriería (buretas, matraces, probetas, pipetas, vasos), materiales de uso específico, reactivos y equipos de precisión.

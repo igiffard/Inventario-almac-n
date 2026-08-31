@@ -1,5 +1,6 @@
 import React from 'react';
 import { InventoryProvider, useInventory } from './context/InventoryContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
 import { DashboardView } from './components/DashboardView';
@@ -8,7 +9,9 @@ import { CustodyView } from './components/CustodyView';
 import { ConditionView } from './components/ConditionView';
 import { RestockView } from './components/RestockView';
 
-// Modals
+// Modals & Gates
+import { AccessGate } from './components/AccessGate';
+import { SecurityModal } from './components/SecurityModal';
 import { ItemDetailModal } from './components/ItemDetailModal';
 import { AddItemModal } from './components/AddItemModal';
 import { CustodyTransferModal } from './components/CustodyTransferModal';
@@ -32,11 +35,18 @@ const MainContent: React.FC = () => {
       <CustodyTransferModal />
       <SyncSheetModal />
       <AssetTagModal />
+      <SecurityModal />
     </main>
   );
 };
 
-export default function App() {
+const AppContent: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <AccessGate />;
+  }
+
   return (
     <InventoryProvider>
       <div className="min-h-screen bg-slate-100/70 text-slate-900 font-sans flex flex-col selection:bg-teal-700 selection:text-white">
@@ -63,4 +73,13 @@ export default function App() {
       </div>
     </InventoryProvider>
   );
+};
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
 }
+

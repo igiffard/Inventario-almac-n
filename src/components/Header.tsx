@@ -9,9 +9,13 @@ import {
   AlertTriangle,
   RotateCcw,
   Sparkles,
-  Maximize2
+  Maximize2,
+  Key,
+  Shield,
+  Lock
 } from 'lucide-react';
 import { useInventory } from '../context/InventoryContext';
+import { useAuth } from '../context/AuthContext';
 import { exportInventoryToExcel } from '../utils/inventoryUtils';
 import { DEFAULT_SHEET_URL } from '../data/initialInventory';
 
@@ -25,6 +29,7 @@ export const Header: React.FC = () => {
     applyPreset 
   } = useInventory();
 
+  const { setIsSecurityModalOpen, logout } = useAuth();
   const [isIframe, setIsIframe] = useState(false);
 
   useEffect(() => {
@@ -113,6 +118,16 @@ export const Header: React.FC = () => {
                   <span>Stock Completo</span>
                 </>
               )}
+            </button>
+
+            {/* Security / Universal Code Settings */}
+            <button
+              onClick={() => setIsSecurityModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors"
+              title="Configurar código de acceso universal y enlaces compartidos"
+            >
+              <Key className="w-4 h-4 text-amber-600" />
+              <span className="hidden xl:inline">Clave de Acceso</span>
             </button>
 
             {/* Sync with Google Sheet */}
